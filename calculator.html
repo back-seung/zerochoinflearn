@@ -64,6 +64,8 @@
     let numOne = '';
     let operator = '';
     let numTwo = '';
+    const $operator = document.querySelector('#operator');
+    const $result = document.querySelector('#result');
     /*if문 중첩 줄이기
     1. 공통된 절차를 각 분기점 내부에 넣는다.
     2. 분기점에서 짧은 절차부터 실행하게 if문을 작성한다.
@@ -83,8 +85,6 @@
       numTwo += event.target.textContent;
       $result.value = event.target.textContent;
     };
-    const $operator = document.querySelector('#operator');
-    const $result = document.querySelector('#result');
     document.querySelector('#num-0').addEventListener('click', onClickNumber);
     document.querySelector('#num-1').addEventListener('click', onClickNumber);
     document.querySelector('#num-2').addEventListener('click', onClickNumber);
@@ -97,19 +97,88 @@
     document.querySelector('#num-9').addEventListener('click', onClickNumber);
 
     const onClickOperator = (op) => () => {
-      if (numOne) {
-        operator = op;
-        $operator.value = op;
-      } else {
-        alert('숫자를 먼저 입력하세요');
+//      if (numOne) {
+//        operator = op;
+//       $operator.value = op;
+//      }
+      if (!numOne && operator === '-') {
+        $operator.value = operator;
+        numOne *= -1;
+        numOne = $result.value;
+      }
+      if (numTwo) {
+        switch (operator) {
+          case '+':
+            $result.value = parseInt(numOne) + parseInt(numTwo);
+            break;
+          case '-':
+            $result.value = numOne - numTwo;
+            break;
+          case '/':
+            $result.value = numOne / numTwo;
+            break;
+          case '*':
+            $result.value = numOne * numTwo;
+            break;
+          default:
+            break;
+        }
+        numOne = $result.value;
+        numTwo = '';
       }
     }
     document.querySelector('#plus').addEventListener('click', onClickOperator('+'));
     document.querySelector('#minus').addEventListener('click', onClickOperator('-'));
     document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
     document.querySelector('#multiply').addEventListener('click', onClickOperator('*'));
-    document.querySelector('#calculate').addEventListener('click', onClickOperator('='));
-    document.querySelector('#clear').addEventListener('click', onClickOperator('+'));
+    document.querySelector('#calculate').addEventListener('click', () => {
+      if (numTwo) {
+        switch (operator) {
+          case '+':
+            $result.value = parseInt(numOne) + parseInt(numTwo);
+            break;
+          case '-':
+            $result.value = numOne - numTwo;
+            break;
+          case '/':
+            $result.value = numOne / numTwo;
+            break;
+          case '*':
+            $result.value = numOne * numTwo;
+            break;
+          default:
+            break;
+        }
+        $operator.value = '';
+        numOne = $result.value;
+        operator = '';
+        numTwo = '';
+      } else {
+        alert('숫자를 먼저 입력하세요.');
+      }
+    });
+    /*  switch - > if 연습
+        if (numTwo) {
+          if (operator === '+') {
+            $result.value = parseInt(numOne) + parseInt(numTwo);
+          } else if (operator === '-') {
+            $result.value = parseInt(numOne) - parseInt(numTwo);
+          } else if (operator === '/') {
+            $result.value = parseInt(numOne) / parseInt(numTwo);
+          } else if (operator === '*') {
+            $result.value = parseInt(numOne) * parseInt(numTwo);
+          }
+        } else{
+          alert('숫자를 먼저 입력하세요');
+        }
+    */
+    document.querySelector('#clear').addEventListener('click', () => {
+      numOne = '';
+      operator = '';
+      numTwo = '';
+      $operator.value = '';
+      $result.value = '';
+    });
   </script>
 </body>
 
