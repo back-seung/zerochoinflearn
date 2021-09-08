@@ -100,6 +100,10 @@
       if (numOne) {
         operator = op;
         $operator.value = op;
+      } else if (!numOne && op === '-') {
+        numOne = op;
+        $operator.value = '-';
+        $result.value = numOne;
       }
       if (numTwo) {
         switch (operator) {
@@ -133,9 +137,6 @@
             $result.value = parseInt(numOne) + parseInt(numTwo);
             break;
           case '-':
-            if(numOne < numTwo){
-              $result.value = (numOne - (numTwo * -1));
-            }
             $result.value = numOne - numTwo;
             break;
           case '/':
