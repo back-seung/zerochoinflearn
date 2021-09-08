@@ -133,6 +133,9 @@
             $result.value = parseInt(numOne) + parseInt(numTwo);
             break;
           case '-':
+            if(numOne < numTwo){
+              $result.value = (numOne - (numTwo * -1));
+            }
             $result.value = numOne - numTwo;
             break;
           case '/':
