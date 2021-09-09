@@ -18,22 +18,60 @@
       const $input = document.querySelector("#input");
       const $logs = document.querySelector("#logs");
 
-			const numbers = [];
-			// 1부터 9까지 순차적으로 numbers[]에 저장.
+      const numbers = [];
+      // 1부터 9까지 순차적으로 numbers[]에 저장.
       for (let i = 0; i < 9; i++) {
         numbers.push(i + 1);
       }
 
-			const answer = [];
-			// numbers[1,2,3,4,5,6,7,8,9]에서 4개의 숫자를 랜덤으로 뽑아옴
-			// answer[]에 index가 추가되고, numbers[]에서는 그 index가 빠짐.
-			for (let i = 0; i < 4; i++) {
-				const index = Math.floor(Math.random() *  numbers.length);
-				answer.push(numbers[index]);
-				//splice() 는 요소를 제거하는 함수.
-				numbers.splice(index, 1);
-			}
-		
+      const answer = [];
+      // numbers[1,2,3,4,5,6,7,8,9]에서 4개의 숫자를 랜덤으로 뽑아옴
+      // answer[]에 index가 추가되고, numbers[]에서는 그 index가 빠짐.
+      for (let i = 0; i < 4; i++) {
+        const index = Math.floor(Math.random() * numbers.length);
+        answer.push(numbers[index]);
+        //splice() 는 요소를 제거하는 함수.
+        numbers.splice(index, 1);
+      }
+      const tries = [];
+      function checkInput(input) {
+        // 3146
+        if (input.length !== 4) {
+          // input의 길이가 4가 아닌가
+          return alert("4자리 숫자를 입력해주세요");
+        }
+        if (new Set(input).size !== 4) {
+          // new Set은 중복된 내용을 제거함(length가 아닌 size로 검사함). 중복된 숫자가 있는가
+          return alert("중복되지 않게 입력해주세요");
+        }
+        if (tries.includes(input)) {
+          // 이미 시도한 값은 아닌가(배열에 시도한 input의 값이 들어 있는가)
+          return alert("이미 시도한 값입니다.");
+        }
+        return true;
+      } //검사하는 코드
+
+      $form.addEventListener("submit", (event) => {
+        event.preventDefault(); // 기본 동작 막기
+        const value = $input.value;
+        $input.value = "";
+        if (!checkInput(value)) {
+          return;
+        }
+        // 입력값 문제 없음
+        if (answer.join("") === value) {
+          $logs.textContent = "HOME RUN!";
+          return;
+        }
+        if (tries.length >= 9) {
+          const message = document.createTextNode(`패배! 정답은 ${answer.join("")}`);
+          $logs.appendChild(message);
+          return;
+        }
+        // 몇 스트라이크 몇 볼인지 검사
+        tries.push(value);
+      });
+      // 입력값 문제 있음
     </script>
   </body>
 </html>
