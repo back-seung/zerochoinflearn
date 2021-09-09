@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숫자야구</title>
+  </head>
+
+  <body>
+    <form id="form">
+      <input type="text" id="input" />
+      <button>확인</button>
+    </form>
+    <div id="logs"></div>
+    <script>
+      const $form = document.querySelector("#form");
+      const $input = document.querySelector("#input");
+      const $logs = document.querySelector("#logs");
+
+			const numbers = [];
+			// 1부터 9까지 순차적으로 numbers[]에 저장.
+      for (let i = 0; i < 9; i++) {
+        numbers.push(i + 1);
+      }
+
+			const answer = [];
+			// numbers[1,2,3,4,5,6,7,8,9]에서 4개의 숫자를 랜덤으로 뽑아옴
+			// answer[]에 index가 추가되고, numbers[]에서는 그 index가 빠짐.
+			for (let i = 0; i < 4; i++) {
+				const index = Math.floor(Math.random() *  numbers.length);
+				answer.push(numbers[index]);
+				//splice() 는 요소를 제거하는 함수.
+				numbers.splice(index, 1);
+			}
+		
+    </script>
+  </body>
+</html>
